@@ -1,1 +1,2 @@
 # symfony-exercises
+Init commit
