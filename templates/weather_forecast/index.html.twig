@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello WeatherForecastController!{% endblock %}
+
+{% block body %}
+<div>
+    <h1> Forecast for: {{ city }}, {{ cc }} </h1>
+    {% for keyDummy, dataDummy in dummy_data %}
+        {% for key, data in dataDummy %}
+            {% if key == 'date' %}
+                <h2> {{ key }} {{ data }} </h2>
+                <br/>
+            {% else  %}
+                <p><b>{{ key }}</b> : {{ data }} </p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}

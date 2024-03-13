@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\ForecastModelDTO;
+use App\RequestModel\ForecastModelDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,14 +21,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class WeatherController extends AbstractController
 {
-    #[Route('/forecast/api', host: "api.localhost" )]
+    #[Route('/forecast/api', host: "api.localhost")]
     public function forecast_json(
         // #[MapQueryString] ?ForecastModelDTO $fmodel = null
-        
+
         // 
-        ): Response 
+    ): Response
     {
-            
+
         // if(!$fmodel) {
         //     $fmodel = new ForecastModelDTO();
         //     $fmodel->email = "xx@xx.xx";
@@ -57,28 +57,27 @@ class WeatherController extends AbstractController
     }
 
 
-    #[Route('/forecast/{threshold<\d+>}', methods: ['GET', 'POST'], name: "forecast" )]
+    #[Route('/forecast/{threshold<\d+>}', methods: ['GET', 'POST'], name: "forecast")]
     public function forecast(
-        Request $request, 
+        Request $request,
         RequestStack $requestStack,
         ?int $threshold = null
     ): Response {
 
         $session = $requestStack->getSession();
 
-        if($threshold) {
+        if ($threshold) {
             $session->set("threshold", $threshold);
             $this->addFlash('info', "This is flash message ::: ");
-        }else {
+        } else {
             $threshold = $session->get("threshold", 50);
         }
 
         $forecasts = [];
 
-        for($x = 0; $x < $threshold; $x++) {
-            $rint = random_int(0,100);
+        for ($x = 0; $x < $threshold; $x++) {
+            $rint = random_int(0, 100);
             $forecasts[] = $rint < 50 ? "It's going to be cold" : "It's going to be warm";
-            
         }
 
         return $this->render('weather/index.html.twig', [
@@ -87,29 +86,29 @@ class WeatherController extends AbstractController
         ]);
     }
 
-    
+
     #[Route('/forecast/{guess}', methods: ['GET', 'POST'], name: "forecast_guess")]
     public function forecast_weather(
-        Request $request, 
-        RequestStack $requestStack, 
-        string $guess = null 
+        Request $request,
+        RequestStack $requestStack,
+        string $guess = null
     ): Response {
         $session = $requestStack->getSession();
-        
+
         $threshold = $session->get("threshold");
 
-        echo $threshold."<br/>";
+        echo $threshold . "<br/>";
 
         $trials = $request->get('trials', default: 1);
         echo $trials;
         die();
         $weather_available = ['snow', 'sunny', 'rain', 'hail'];
 
-        if(!in_array($guess, $weather_available ) ) {
+        if (!in_array($guess, $weather_available)) {
 
             #throw $this->createNotFoundException("This guess not found... ");
             #throw new NotFoundHttpException('This guess is not found');
-            
+
             throw new \Exception("Base exception");
         }
 
@@ -121,9 +120,9 @@ class WeatherController extends AbstractController
     }
 
     #[Route('/forecast/redirect', name: 'redirect')]
-    public function redirect_forecast(): RedirectResponse {
+    public function redirect_forecast(): RedirectResponse
+    {
 
-        return $this->redirectToRoute('forecast', [], 302 );
+        return $this->redirectToRoute('forecast', [], 302);
     }
-
 }

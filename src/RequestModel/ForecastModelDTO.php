@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Model;
+namespace App\RequestModel;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ForecastModelDTO {
+class ForecastModelDTO
+{
     public function __construct(
         #[Assert\NotBlank]
         public int $threshold = 50,
@@ -16,6 +18,6 @@ class ForecastModelDTO {
             message: 'The email {{ value }} is not a valid email'
         )]
         public string $email = "",
-    ){
+    ) {
     }
 }
