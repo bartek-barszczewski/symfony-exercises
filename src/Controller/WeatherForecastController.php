@@ -26,7 +26,7 @@ class WeatherForecastController extends AbstractController
                 'feels_like' => random_int(-60, 60),
                 'pressure' => random_int(960, 1030),
                 'humidity' => random_int(0, 100),
-                'wind' => $randomizer->getFloat(0, 100),
+                
                 'cloudines' => random_int(0, 100),
                 'icon' => 'sun%',
             ],
@@ -36,7 +36,7 @@ class WeatherForecastController extends AbstractController
                 'feels_like' => random_int(-60, 60),
                 'pressure' => random_int(960, 1030),
                 'humidity' => random_int(0, 100),
-                'wind' => $randomizer->getFloat(0, 100),
+                
                 'cloudines' => random_int(0, 100),
                 'icon' => 'sun%',
             ],
@@ -46,43 +46,48 @@ class WeatherForecastController extends AbstractController
                 'feels_like' => random_int(-60, 60),
                 'pressure' => random_int(960, 1030),
                 'humidity' => random_int(0, 100),
-                'wind' => $randomizer->getFloat(0, 100),
+                
                 'cloudines' => random_int(0, 100),
                 'icon' => 'sun%',
             ]
         ];
     }
 
-    #[Route('/weather/forecast/{cc}/{city}', name: 'forecast')]
+    #[Route('/weather/forecast/1', name: 'forecast')]
     public function index(
-        Request $request,
-        RequestStack $reqStack,
-        string $cc,
-        string $city
+        // Request $request,
+        // RequestStack $reqStack,
+        // string $cc,
+        // string $city,
+        // string $_format = 'html',
 
     ): Response {
-        $session = $reqStack->getSession();
+        // $session = $reqStack->getSession();
 
-        if (!in_array($city, $this->cities)) {
-            throw new \Exception("Sorry, the city: " . $city . " not exist in array");
-        }
+        // if (!in_array($city, $this->cities)) {
+        //     throw new \Exception("Sorry, the city: " . $city . " not exist in array");
+        // }
 
-        $session->set("cc", $cc);
-        $session->set("city", $city);
+        // $session->set("cc", $cc);
+        // $session->set("city", $city);
 
-        return $this->render('weather_forecast/index.html.twig', [
-            'dummy_data' => $this->dummy_data,
-            'cc' => $cc,
-            'city' => $city,
-        ]);
+        // $forecast_json_view = $this->renderView("weather_forecast/index.{$_format}.twig", [
+        //     'cc' => $cc,
+        //     'city' => $city,
+        //     'forecast' => $this->dummy_data,
+        // ]);
+
+        // $response = new Response($forecast_json_view);
+        
+        return $this->render("weather_forecast/index.html.twig");
     }
 
-    #[Route('/weather/forecast/session', name: 'forecast_session')]
+    #[Route('/weather/forecast/2', name: 'forecast_session')]
     public function index_session(RequestStack $reqStack): Response
     {
         $session = $reqStack->getSession();
 
-        return $this->render('weather_forecast/index_session.html.twig', [
+        return $this->render('weather_forecast/forecast.html.twig', [
             'cc' => $session->get("cc"),
             'city' => $session->get('city')
         ]);
