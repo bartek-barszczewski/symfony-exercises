@@ -1,0 +1,25 @@
+.navbar, .navbar-brand, .nav-link   {
+    background-color: #333 !important; 
+    color: white !important;
+}
+
+.btn-outline {
+    background-color: #33ac51;
+}
+
+.btn-outline:hover {
+    background-color: #33ac80;
+}
+
+.navbar-toggler {
+    background-color: #33ac51;
+}
+
+#container {
+    background-color: #efefef;
+    height: min(100vh, 50%);
+}
+
+.bi, .temp {
+    font-size: 4rem;
+}
