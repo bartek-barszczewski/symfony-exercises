@@ -1,7 +1,7 @@
 # symfony-exercises
-===
+
 # Branches
-===
+
 ## master
 You are here now
 
