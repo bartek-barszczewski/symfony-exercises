@@ -1,4 +1,5 @@
 <?php
+// php bin/console make:entity
 
 namespace App\Controller;
 
@@ -9,6 +10,8 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+
+
 
 #[Route("/location-dummy")]
 class LocationDummyController extends AbstractController
@@ -170,7 +173,7 @@ class LocationDummyController extends AbstractController
         return $this->json($json);
     }
 
-    #[Route('/')]
+    #[Route('/', name: 'app_location_index')]
     public function findAllWithForecasts(
         LocationRepository $locationRepository
     ): JsonResponse {

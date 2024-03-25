@@ -1,4 +1,5 @@
 <?php
+// php bin/console make:entity
 
 namespace App\Controller;
 
