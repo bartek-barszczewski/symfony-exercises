@@ -13,56 +13,41 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
-    public function save(Location $entity, bool $flush = false): void {
-        $em = $this->getEntityManager();
-        $em->persist($entity);
-
-        if($flush) {
-            $em->flush();
-        }
-    }
-
-    public function remove(Location $entity, bool $flush = false): void {
-        $em = $this->getEntityManager();
-        // dump($entity);
-        // die();
-        $em->remove($entity);
-
-        if($flush) {
-            $em->flush();
-        }
-    }
-
-    public function findOneByName(string $name): ?Location {
-
-        $qb = $this->createQueryBuilder("l");
-        $qb
-            ->where('l.name = :name')
-            ->setParameter('name', $name)
-            ->andWhere('l.countryCode = :countryCode')
-            ->setParameter( 'countryCode', 'PL' )
-        ;
-
-        $query = $qb->getQuery();
-
-        $entity = $query->getOneOrNullResult();
-
-        return $entity;
+    public function getAll(): ?array {
         
-    }
+        $query = $this->createQueryBuilder("l");
 
-    public function findAllWithForecasts(): array {
-        $qb = $this->createQueryBuilder('l');
-
-        $qb
-            ->select('l', 'f')
-            ->leftJoin('l.forecasts', 'f')
+        $query 
+            ->select('l')
         ;
 
-        $query = $qb->getQuery();
+        $query = $query->getQuery();
         $result = $query->getResult();
 
         return $result;
     }
+    
+    public function findOneByName($city, $date): ?Location {
+        dump($city);
+        dump($date);
 
+        $query = $this->createQueryBuilder("l");
+
+        $query
+            ->select("l", "f")
+            ->leftJoin("l.forecasts", "f")
+            ->where("f.date = :date")
+            ->setParameter("date", "" )
+        ;
+
+        $query = $query->getQuery();
+        dump($query);
+
+        //die();
+        $result = $query->getResult();
+        dump($result);
+        die();
+
+        return $result;
+    }
 }

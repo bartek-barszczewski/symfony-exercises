@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block custom_styles %}
+    <link rel="stylesheet" href="{{ asset('styles/custom.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock %}
+
+{% block body %}
+    {% block header %} {% endblock %}
+    {% block content %} {% endblock %}
+    {% block footer %} {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
+

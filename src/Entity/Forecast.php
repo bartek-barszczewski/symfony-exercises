@@ -14,19 +14,121 @@ class Forecast
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column]
+    private ?float $temperature = null;
 
     #[ORM\Column]
-    private ?int $celsius = null;
+    private ?float $pressure = null;
 
-    #[ORM\ManyToOne(inversedBy: 'forecasts')]
+    #[ORM\Column]
+    private ?float $wind_speed = null;
+
+    #[ORM\Column]
+    private ?bool $cloud = null;
+
+    #[ORM\Column]
+    private ?bool $sun = null;
+
+    #[ORM\Column]
+    private ?bool $rain = null;
+
+    #[ORM\Column]
+    private ?bool $snow = null;
+
+    #[ORM\Column]
+    private ?\DateTime $date = null;
+
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'forecasts', cascade:['persist'] )]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Location $location = null;
+    private ?Location $location_id = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTemperature(): ?float
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature(float $temperature): static
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    public function getPressure(): ?float
+    {
+        return $this->pressure;
+    }
+
+    public function setPressure(float $pressure): static
+    {
+        $this->pressure = $pressure;
+
+        return $this;
+    }
+
+    public function getWindSpeed(): ?float
+    {
+        return $this->wind_speed;
+    }
+
+    public function setWindSpeed(float $wind_speed): static
+    {
+        $this->wind_speed = $wind_speed;
+
+        return $this;
+    }
+
+    public function isCloud(): ?bool
+    {
+        return $this->cloud;
+    }
+
+    public function setCloud(bool $cloud): static
+    {
+        $this->cloud = $cloud;
+
+        return $this;
+    }
+
+    public function isSun(): ?bool
+    {
+        return $this->sun;
+    }
+
+    public function setSun(bool $sun): static
+    {
+        $this->sun = $sun;
+
+        return $this;
+    }
+
+    public function isRain(): ?bool
+    {
+        return $this->rain;
+    }
+
+    public function setRain(bool $rain): static
+    {
+        $this->rain = $rain;
+
+        return $this;
+    }
+
+    public function isSnow(): ?bool
+    {
+        return $this->snow;
+    }
+
+    public function setSnow(bool $snow): static
+    {
+        $this->snow = $snow;
+
+        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -34,33 +136,21 @@ class Forecast
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getCelsius(): ?int
+    public function getLocationId(): ?Location
     {
-        return $this->celsius;
+        return $this->location_id;
     }
 
-    public function setCelsius(int $celsius): static
+    public function setLocationId(?Location $location_id): static
     {
-        $this->celsius = $celsius;
-
-        return $this;
-    }
-
-    public function getLocation(): ?Location
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?Location $location): static
-    {
-        $this->location = $location;
+        $this->location_id = $location_id;
 
         return $this;
     }

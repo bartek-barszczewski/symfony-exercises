@@ -1,0 +1,18 @@
+{% extends 'location/index.html.twig' %}
+
+{% block title %}New Location{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="pt-5">
+        <div class="py-5 text-center">
+            <h1>Create new Location</h1>
+        </div>
+    <div>
+
+    {{ include('location_panel/_form.html.twig') }}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'location/index.html.twig' %}
+
+{% block title %}Forecast index{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="pt-5">
+        <div class="py-5 text-center">
+            
+            <h1>Forecast manager panel</h1>
+    
+        </div>
+    <div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Temperature</th>
+                <th>Pressure</th>
+                <th>Wind_speed</th>
+                <th>Cloud</th>
+                <th>Sun</th>
+                <th>Rain</th>
+                <th>Snow</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for forecast in forecasts %}
+            <tr>
+                <td>{{ forecast.id }}</td>
+                <td>{{ forecast.temperature }}</td>
+                <td>{{ forecast.pressure }}</td>
+                <td>{{ forecast.windSpeed }}</td>
+                <td>{{ forecast.cloud ? 'Yes' : 'No' }}</td>
+                <td>{{ forecast.sun ? 'Yes' : 'No' }}</td>
+                <td>{{ forecast.rain ? 'Yes' : 'No' }}</td>
+                <td>{{ forecast.snow ? 'Yes' : 'No' }}</td>
+                <td>{{ forecast.date ? forecast.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_forecast_panel_show', {'id': forecast.id}) }}">show</a>
+                    <a href="{{ path('app_forecast_panel_edit', {'id': forecast.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_forecast_panel_new') }}">Create new</a>
+
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}

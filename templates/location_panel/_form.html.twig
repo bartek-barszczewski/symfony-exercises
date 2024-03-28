@@ -1,0 +1,13 @@
+<div class="container-fluid">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="col-5">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+
+            
+            <a href="{{ path('app_location_panel_index') }}">back to list</a>
+        </div>
+    </div>
+</div>

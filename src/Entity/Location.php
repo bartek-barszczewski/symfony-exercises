@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
@@ -17,18 +16,21 @@ class Location
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $city = null;
 
-    #[ORM\Column(length: 2)]
-    private ?string $countryCode = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $countryName = null;
+    
+    #[ORM\Column(length: 5)]
+    private ?string $cc = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
-    private ?string $latitude = null;
+    #[ORM\Column]
+    private ?float $latitude = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
-    private ?string $longitude = null;
+    #[ORM\Column]
+    private ?float $longitude = null;
 
-    #[ORM\OneToMany(targetEntity: Forecast::class, mappedBy: 'location')]
+    #[ORM\OneToMany(targetEntity: Forecast::class, mappedBy: 'location_id')]
     private Collection $forecasts;
 
     public function __construct()
@@ -41,48 +43,60 @@ class Location
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getCity(): ?string
     {
-        return $this->name;
+        return $this->city;
     }
 
-    public function setName(string $name): static
+    public function setCity(string $city): static
     {
-        $this->name = $name;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getCountryCode(): ?string
+    public function getCountryName(): ?string
     {
-        return $this->countryCode;
+        return $this->countryName;
     }
 
-    public function setCountryCode(string $countryCode): static
+    public function setCountryName(string $countryName): static
     {
-        $this->countryCode = $countryCode;
+        $this->countryName = $countryName;
 
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getCc(): ?string
+    {
+        return $this->cc;
+    }
+
+    public function setCc(string $cc): static
+    {
+        $this->cc = $cc;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setLatitude(float $latitude): static
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setLongitude(string $longitude): static
+    public function setLongitude(float $longitude): static
     {
         $this->longitude = $longitude;
 
@@ -101,7 +115,7 @@ class Location
     {
         if (!$this->forecasts->contains($forecast)) {
             $this->forecasts->add($forecast);
-            $forecast->setLocation($this);
+            $forecast->setLocationId($this);
         }
 
         return $this;
@@ -111,8 +125,8 @@ class Location
     {
         if ($this->forecasts->removeElement($forecast)) {
             // set the owning side to null (unless already changed)
-            if ($forecast->getLocation() === $this) {
-                $forecast->setLocation(null);
+            if ($forecast->getLocationId() === $this) {
+                $forecast->setLocationId(null);
             }
         }
 

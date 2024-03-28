@@ -1,0 +1,74 @@
+{% extends 'location/index.html.twig' %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    <div class="mt-5">
+        <div class="col-12 d-flex justify-content-center pt-5">
+            <div class="col-4 d-flex justify-content-center">
+                {{ form_start(form, { attr: {class: 'd-flex flex-row align-items-center', style: 'width: 100%'} } ) }}
+                {{ form_widget(form, { attr: {style: 'width: 100%', 'placeholder': 'Type city' } } ) }}
+                <button class="btn btn-primary">
+                    {{ button_label|default('Search') }}
+                </button>
+                {{ form_end(form) }}
+
+            
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-center pt-5">
+        <h1> {{ country }}, {{ city }} </h1>
+    </div>
+
+    <div class="gmap_canvas col-12 d-flex justify-content-center">
+        <div class="my-5" style="overflow:hidden;max-width:100%;width:59vw;height:20vh;">
+            <div id="g-mapdisplay" style="height:100%; width:100%;max-width:100%;">
+                <iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q={{ city }},+{{ country }}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center" style="gap: 2rem">
+    
+                <div class="col-3">
+        
+                    <div class="col-12 card p-5 d-flex flex-row justify-content-between" >
+                        <span class="display-2">{{ temperature }} °C</span>
+                        
+                        {% if cloud == true %}
+                            <i class="display-2 bi bi-clouds"></i>
+                        {% endif %}
+
+                        {% if sun == true  %}
+                            <i class="display-2 bi bi-brightness-high"></i>
+                        {% endif %}
+                        
+                        {% if rain == true %}
+                            <i class="display-2 bi bi-cloud-rain-heavy"></i>
+                        {% endif %}
+                
+                        {% if snow == true %}
+                            <i class="display-2 bi bi-thermometer-snow"></i>
+                        {% endif %}
+                    </div>
+                
+                </div>
+
+                <div class="col-4">
+
+                </div>
+            </div>
+        </div>
+    <div>
+
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}
